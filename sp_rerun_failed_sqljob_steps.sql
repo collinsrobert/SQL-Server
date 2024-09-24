@@ -5,7 +5,8 @@ Create proc sp_rerun_failed_sqljob_steps
 Author: Collins Robert
 Create Date: 9/23/2024
 ************Description: This procedure re-runs any failed job step that occured within the last hour, 
-************************provided the job is not retrying or re-executing
+************************provided the job is not retrying or re-executing. It then sends out an email showing the originating server name,
+************************the sql agent step error message, the re-execution command showing which job and step is re-running and the details of the step being executed. 	
 */
 as
 
