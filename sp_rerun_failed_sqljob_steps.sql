@@ -4,7 +4,7 @@ Create proc sp_rerun_failed_sqljob_steps
 /*
 Author: Collins Robert
 Create Date: 9/23/2024
-************Description: This procedure re-runs any failed job step that occured within the last 5 minutes, 
+************Description: This procedure re-runs any failed job step that occured within the last hour, 
 ************************provided the job is not retrying or re-executing
 */
 as
@@ -26,7 +26,7 @@ join msdb.dbo.sysjobactivity ja on j.job_id=ja.job_id
 where js.last_run_outcome=0 and js.last_run_date<>0 and 
 CAST(
 STUFF(STUFF(CAST(js.last_run_date as varchar),7,0,'-'),5,0,'-') + ' ' + 
-STUFF(STUFF(REPLACE(STR(js.last_run_time,6,0),' ','0'),5,0,':'),3,0,':') as datetime)>=dateadd(MINUTE,-5,getdate())
+STUFF(STUFF(REPLACE(STR(js.last_run_time,6,0),' ','0'),5,0,':'),3,0,':') as datetime)>=dateadd(MINUTE,-60,getdate())
 and ja.start_execution_date IS NOT NULL
    AND ja.stop_execution_date IS not NULL
 
