@@ -1,4 +1,4 @@
-use IMG_Dataservices
+use Master
 go
 
 
@@ -6,7 +6,7 @@ create proc sp_fix_all_db_orphaned_users_DR
 
 as
 /*
-*Author: Collins Were
+*Author: Collins Robert
 *Date:9/2/2022
 *Date modified:     BY: 
 *Description:###################################################################################
