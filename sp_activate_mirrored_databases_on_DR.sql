@@ -1,4 +1,4 @@
-use IMG_DataServices
+use Master
 go
 
 create proc sp_activate_mirrored_databases_on_DR
@@ -6,7 +6,7 @@ create proc sp_activate_mirrored_databases_on_DR
 as
 
 /*
-*Author: Collins Were
+*Author: Collins Robert
 *Date:4/24/2022
 *Date modified:     BY: 
 *Description:###################################################################################
