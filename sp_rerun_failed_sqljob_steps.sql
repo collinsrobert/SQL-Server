@@ -1,3 +1,28 @@
+
+----Create notification log table
+
+USE [Master]
+GO
+
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[dataservices_notifications_log](
+	[Notification_Id] [int] IDENTITY(1,1) NOT NULL,
+	[Message] [varchar](50) NULL,
+	[Last_Sent] [datetime] NULL
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
 Use Master
 go
 Create proc sp_rerun_failed_sqljob_steps
