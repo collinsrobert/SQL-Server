@@ -33,9 +33,11 @@ CREATE TABLE [dbo].[rdl_info_processed](
 GO
 
 
+-----####################################################Create Tables below
+-----#####################rdl_info_master
+-----#####################
 
-
-USE [IMG_DataServices]
+USE [Master]
 GO
 
 /****** Object:  Table [dbo].[rdl_info_master]    Script Date: 9/28/2024 6:39:02 PM ******/
@@ -54,3 +56,7 @@ CREATE TABLE [dbo].[rdl_info_master](
 	[ContentXML] [xml] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
+
+-------------##################Create the SQL Agent Job Below to continuously process the SSRS information and load the two tables above
+
