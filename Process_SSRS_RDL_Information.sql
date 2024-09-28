@@ -59,6 +59,7 @@ GO
 
 
 -------------##################Create the SQL Agent Job Below to continuously process the SSRS information and load the two tables above
+-------------################## Daily Schedule is alright	
 
 USE [msdb]
 GO
