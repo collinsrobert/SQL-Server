@@ -41,6 +41,18 @@ declare @sql varchar(max),
 @msg varchar(max),
 @profile varchar(max),
 @command varchar(max);
+--------------------#########################Retrieve the email profile define on SQL server Agent for notifications and/or alerts
+--------------------#########################Added 2024/09/29 
+
+declare @dirtable table ([value] varchar(max),
+[Data] varchar(max) ) 
+insert into @dirtable
+exec xp_instance_regread  N'HKEY_LOCAL_MACHINE',
+                                            N'SOFTWARE\Microsoft\MSSQLServer\SQLServerAgent',
+                                            N'DatabaseMailProfile'
+select @profile=[Data] from @dirtable
+
+---print @profile
 
 declare sql_jobstep_fail_rerun_cur CURSOR FOR
 
@@ -68,8 +80,15 @@ while @@FETCH_STATUS = 0
  if  (@sql is not null)
  Begin
  exec(@sql)
+
+
+	
  select @profile= max(name)
 from msdb.dbo.sysmail_profile 
+
+
+
+	
  set @msg='<style> 
  H1 {color:blue;text-align:center;background-color:Maroon;padding-top:5px;padding-bottom:4px; }
   </Style> <body><H1>ServerName</H1></BR><span style="background-color:yellow;">'+cast(@@servername as varchar(max))+'</span><H1>Failure message</H1></BR> <span style="background-color:red;">'+@message+'</span></BR> <H1>SQL Job Restarted below</H1></BR>'+@sql+'</BR> <H1 >Step Details executed below</H1></BR>'+@command+'</br></body>'
