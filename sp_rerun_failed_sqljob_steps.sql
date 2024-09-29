@@ -47,7 +47,7 @@ declare @sql varchar(max),
 declare @dirtable table ([value] varchar(max),
 [Data] varchar(max) ) 
 insert into @dirtable
-exec xp_instance_regread  N'HKEY_LOCAL_MACHINE',
+exec msdb.dbo.xp_instance_regread  N'HKEY_LOCAL_MACHINE',
                                             N'SOFTWARE\Microsoft\MSSQLServer\SQLServerAgent',
                                             N'DatabaseMailProfile'
 select @profile=[Data] from @dirtable
