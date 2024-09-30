@@ -23,3 +23,41 @@ CREATE CREDENTIAL [ACTIVE_DIRECTORY\ProxyAccunt]----This can be any name
 	SECRET = N'12345'---This references the password of the credential
 	
 GO
+
+
+---Then create a proxy associated to the credential above using the script below
+---You will need to create all needed proxies
+--Commonly used proxies
+/********************
+Operating System (CmdExec)
+PowerShell
+SSIS Package Execution
+Analysis Services Command
+*********************/
+--++++++++++++++++++=====================================================================================================
+---below is Operating System (CmdExec)
+	--This can be used to execute ane batch scripts or any command that can be called from cmd or Dos.
+USE [msdb]
+GO
+EXEC msdb.dbo.sp_add_proxy @proxy_name=N'CMD_Proxy',@credential_name=N'ACTIVE_DIRECTORY\ProxyAccunt', 
+		@enabled=1
+GO
+EXEC msdb.dbo.sp_grant_proxy_to_subsystem @proxy_name=N'CMD_Proxy', @subsystem_id=3
+GO
+
+
+--++++++++++++++++++=====================================================================================================
+---below is Analysis Services Command
+	---This can be used to run SSAS Cubes when connected to an SSAS engine
+
+
+USE [msdb]
+GO
+EXEC msdb.dbo.sp_add_proxy @proxy_name=N'SSAS_Proxy',@credential_name=N'ACTIVE_DIRECTORY\ProxyAccunt', 
+		@enabled=1
+GO
+EXEC msdb.dbo.sp_grant_proxy_to_subsystem @proxy_name=N'SSAS_Proxy', @subsystem_id=10
+GO
+
+
+
