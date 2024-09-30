@@ -36,7 +36,7 @@ Analysis Services Command
 *********************/
 --++++++++++++++++++=====================================================================================================
 ---below is Operating System (CmdExec)
-	--This can be used to execute ane batch scripts or any command that can be called from cmd or Dos.
+	--This can be used to execute ane batch scripts or any command that can be called from cmd or Dos  locally or remotely
 USE [msdb]
 GO
 EXEC msdb.dbo.sp_add_proxy @proxy_name=N'CMD_Proxy',@credential_name=N'ACTIVE_DIRECTORY\ProxyAccunt', 
@@ -48,7 +48,7 @@ GO
 
 --++++++++++++++++++=====================================================================================================
 ---below is Analysis Services Command
-	---This can be used to run SSAS Cubes when connected to an SSAS engine
+	---This can be used to run SSAS Cubes when connected to an SSAS engine  locally or remotely
 
 
 USE [msdb]
@@ -60,4 +60,30 @@ EXEC msdb.dbo.sp_grant_proxy_to_subsystem @proxy_name=N'SSAS_Proxy', @subsystem_
 GO
 
 
+--++++++++++++++++++=====================================================================================================
+---below is Analysis Services Command
+	---This can be used to run SSIS packages when connected to an SSIS Integration catalog  locally or remotely
+
+USE [msdb]
+GO
+EXEC msdb.dbo.sp_add_proxy @proxy_name=N'SSIS_proxy',@credential_name=N'ACTIVE_DIRECTORY\ProxyAccunt', 
+		@enabled=1
+GO
+EXEC msdb.dbo.sp_grant_proxy_to_subsystem @proxy_name=N'SSIS_proxy', @subsystem_id=11
+GO
+
+
+
+--++++++++++++++++++=====================================================================================================
+---below is Analysis Services Command
+	---This can be used to run powershell scripts locally or remotely
+USE [msdb]
+GO
+EXEC msdb.dbo.sp_add_proxy @proxy_name=N'PowerShell_Proxy',@credential_name=N'ACTIVE_DIRECTORY\ProxyAccunt', 
+		@enabled=1
+GO
+EXEC msdb.dbo.sp_grant_proxy_to_subsystem @proxy_name=N'PowerShell_Proxy', @subsystem_id=12
+GO
+
+--------------Once you create the proxy account, you can then use it when defining a SQL Agent Job Step.
 
