@@ -99,7 +99,7 @@ from msdb.dbo.sysmail_profile
  set @subj= 'SQL Server Failed JobStep Has been re-started'
 				EXEC msdb.dbo.sp_send_dbmail
 				@profile_name = @profile,
-							@recipients = 'email@email.com;',
+							@recipients = 'email@email.com;',-----<---- replace the correct email address or email distribution right HERE
 							@body_format = 'HTML',
 							@body =  @msg,
 						@subject = @subj;
