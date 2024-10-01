@@ -1,4 +1,5 @@
-
+---These scripts will work provided the database mail has already been configured , tested and enabled .
+--- Also provided the SQL agent notification properties has been configured with the correct database mail profile.
 ----Create notification log table
 
 USE [Master]
