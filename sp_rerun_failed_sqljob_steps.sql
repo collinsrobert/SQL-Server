@@ -37,13 +37,16 @@ Create Date: 9/23/2024
 ************************the sql agent step error message, the re-execution command showing which job and step is re-running and the details of the step being executed. 	
 */
 as
+begin
 
 declare @sql varchar(max),
 @subj varchar(max),
 @message varchar(max),
 @msg varchar(max),
 @profile varchar(max),
+@email 	varchar(max) ='email@example.com;'-----<---- replace the correct email address or email distribution right HERE
 @command varchar(max);
+
 --------------------#########################Retrieve the email profile define on SQL server Agent for notifications and/or alerts
 --------------------#########################Added 2024/09/29 
 
@@ -99,7 +102,7 @@ from msdb.dbo.sysmail_profile
  set @subj= 'SQL Server Failed JobStep Has been re-started'
 				EXEC msdb.dbo.sp_send_dbmail
 				@profile_name = @profile,
-							@recipients = 'email@email.com;',-----<---- replace the correct email address or email distribution right HERE
+							@recipients = @email,
 							@body_format = 'HTML',
 							@body =  @msg,
 						@subject = @subj;
@@ -114,6 +117,7 @@ END
 Close sql_jobstep_fail_rerun_cur;
 Deallocate sql_jobstep_fail_rerun_cur;
 
+end---end or proc
 
 ----Create job to execute above script every 30 mins
 ---------###########################################################SQL AGENT JOB Below
