@@ -11,7 +11,8 @@ Date Created: 2024/10/01
 
 use msdb
 go
-
+---Backup Job Owner before update
+  select name, suser_sname(owner_sid) OwnerBeforeUpdate  into SQLAgentJobOwnersBackup from msdb.dbo.sysjobs
 ---Check job owner before update
 
 select name, suser_sname(owner_sid) OwnerBeforeUpdate from msdb.dbo.sysjobs
