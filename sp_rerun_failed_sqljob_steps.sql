@@ -89,8 +89,7 @@ while @@FETCH_STATUS = 0
 
 
 	
- select @profile= max(name)
-from msdb.dbo.sysmail_profile 
+
 
 
 
