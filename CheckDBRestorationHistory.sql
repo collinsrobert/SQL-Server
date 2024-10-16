@@ -22,5 +22,5 @@ select  (dense_rank() over(order by restore_date desc,  t1.restore_history_id))%
 from restorehistory t1 
 left outer join restorefile t2 on ( t1.restore_history_id = t2.restore_history_id ) 
 left outer join backupset t3 on ( t1.backup_set_id = t3.backup_set_id ) 
-where t1.destination_database_name = 'Staging' ---------------REPLACE DATABASE NAME
+--where t1.destination_database_name = 'Staging' ---------------REPLACE DATABASE NAME
 order by restore_date desc,  t1.restore_history_id,t2.destination_phys_name 
