@@ -1,1 +1,21 @@
+DATABASE SECURITY
+Ensure TLS\SSL enabled as per database compatibility level. (Encryption of Data-In-Transit)
+Apply Security patches on SQL Server
+Apply wildcard CA Server certificates (Venafi) and bind SQL Server to encrypt data in transit and force encryption through certificate. 
+Deploy an Establish Technical Security Standard. ( Disable remote access  spp_configure, SQL Server Audits and database audits)
+Configure encyrption if Data at rest (Safenet)
+Enable\Disable\Pause\drop encryption keys Transparent Data Encryption
+Column Level encryption (master key,certificate,symmetric key encrypted by certificate then grant users control of symmetric key and certificates)
+
+PATCHING OR UPGRADING
+Apply these steps first in non-production to build a cutover plan for production 
+Check SQL Agent job ownership and fix all owners if owners not in Active Directory
+Check Database ownership and fix all owners if owners not in Active Directory
+Decrypt Database where applicable
+Backup database and\or take server snapshot before upgrades.
+Go into safety mode when patches fail and investigate the issue NET START MSSQLSERVER /T902
+
+
+
+
 
