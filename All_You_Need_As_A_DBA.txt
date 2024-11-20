@@ -15,7 +15,19 @@ Decrypt Database where applicable
 Backup database and\or take server snapshot before upgrades.
 Go into safety mode when patches fail and investigate the issue NET START MSSQLSERVER /T902
 
+DISASTER RECOVERY
+Configure a backup plan that supports business Recovery Point Objective (RPO) and Recovery Time Objective (RTO)
+        Full backups, Differential Backups, Log backups, Replication.
 
 
 
 
+INSTALLATION
+Database installation\Configuration\Decommission\Patching\Uninstallation
+Un-attended installation using configurationfile.ini
+Building an un-attended installation image (Installs, restores default databases, configures SQL server)
+
+
+
+DATABASE UPGRADE AND MIGRATION
+In-Place or side by side upgrades
