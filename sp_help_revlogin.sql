@@ -1,3 +1,9 @@
+/*
+
+https://learn.microsoft.com/en-us/troubleshoot/sql/database-engine/security/transfer-logins-passwords-between-instances
+
+*/
+
 USE [master]
 GO
 IF OBJECT_ID('dbo.sp_hexadecimal') IS NOT NULL
