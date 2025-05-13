@@ -725,3 +725,23 @@ exec sp_executesql @stmt=N'SELECT
 
 ',@params=N'@OrderBy_Criteria NVarChar(max)',@OrderBy_Criteria=N'CLR Time'
 
+
+----IO STATISTICS ############################################################################################################
+
+
+          select
+          session_id,
+          request_id,
+          master.dbo.fn_varbintohexstr(sql_handle) as sql_handle,
+          master.dbo.fn_varbintohexstr(plan_handle) as plan_handle,
+          case when LEN(qt.text) < 2048 then qt.text else LEFT(qt.text, 2048) + N'...' end as query_text,
+          statement_start_offset,
+          statement_end_offset,
+          wait_type,
+          wait_time,
+          wait_resource,
+          blocking_session_id
+          from sys.dm_exec_requests r
+          outer apply sys.dm_exec_sql_text(sql_handle) as qt
+          where wait_type like 'PAGEIOLATCH_%' --N'Buffer IO'/N'Buffer Latch'
+       
