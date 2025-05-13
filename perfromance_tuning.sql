@@ -862,4 +862,24 @@ exec sp_executesql @stmt=N'SELECT
 		outer apply sys.dm_exec_sql_text(r.sql_handle) as qt
 	where s.is_user_process = 0x1 and (r.reads > 0 or r.writes > 0)
 	order by (r.reads + r.writes) desc
-    
+
+
+----LATCHES ##############################################################################################################################
+ 
+          SELECT latch_class, wait_time_ms, waiting_requests_count,
+          CASE WHEN latch_class LIKE N'ACCESS_METHODS_HOBT_COUNT'
+          OR latch_class LIKE N'ACCESS_METHODS_HOBT_VIRTUAL_ROOT' THEN N'HoBT Metadata'
+          WHEN latch_class LIKE N'ACCESS_METHODS_DATASET_PARENT'
+          OR latch_class LIKE N'ACCESS_METHODS_SCAN_RANGE_GENERATOR'
+          OR latch_class LIKE N'NESTING_TRANSACTION%' THEN N'Parallelism'
+          WHEN latch_class LIKE N'LOG_MANAGER' THEN N'Tran LogIO'
+          WHEN latch_class LIKE N'TRACE_CONTROLLER' THEN N'Trace'
+          WHEN latch_class LIKE N'DBCC_MULTIOBJECT_SCANNER' THEN N'Parallelism - DBCC CHECK_'
+          WHEN latch_class LIKE N'FGCB_ADD_REMOVE' THEN N'Other IO'
+          WHEN latch_class LIKE N'DATABASE_MIRRORING_CONNECTION' THEN N'Mirroring - Busy'
+          WHEN latch_class LIKE N'BUFFER' THEN N'Buffer Pool'
+          ELSE N'Other' END AS 'latch_category'
+
+          FROM sys.dm_os_latch_stats
+          WHERE wait_time_ms > 0
+       
