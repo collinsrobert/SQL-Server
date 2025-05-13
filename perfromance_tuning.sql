@@ -909,3 +909,19 @@ exec sp_executesql @stmt=N'SELECT
           on mid.database_id = d.database_id and mid.object_id = d.object_id
           where d.row_number >= 20
 		--  and db_name(d.database_id)='DB_NAME'
+------Missing Index Script #############################################################################################################################################
+
+
+
+
+          select 		  db_name(d.database_id) dbName,
+REPLACE(REPLACE(CONCAT('CREATE INDEX [IX_' , replace(replace(replace(d.statement ,'[',''),']',''),'.','_'),' ON '+d.statement,' (' , d.equality_columns,',',d.inequality_columns, ') INCLUDE (',d.included_columns,')'),'INCLUDE ()',''),',)',')') Index_DDL,
+		  
+ d.object_id, d.index_handle, d.equality_columns, d.inequality_columns, d.included_columns, d.statement as fully_qualified_object,
+          gs.avg_total_user_cost,gs.avg_user_impact, 
+		  FLOOR((CONVERT(NUMERIC(19,3), gs.user_seeks) + CONVERT(NUMERIC(19,3), gs.user_scans)) * CONVERT(NUMERIC(19,3), gs.avg_total_user_cost) * CONVERT(NUMERIC(19,3), gs.avg_user_impact)) AS Score
+          from sys.dm_db_missing_index_groups g
+          join sys.dm_db_missing_index_group_stats gs on gs.group_handle = g.index_group_handle
+          join sys.dm_db_missing_index_details d on g.index_handle = d.index_handle
+          --where db_name(d.database_id)='DB_NAME'
+		  order by gs.avg_user_impact desc
