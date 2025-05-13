@@ -1,0 +1,2 @@
+--check blocking
+--check waits
