@@ -783,7 +783,7 @@ exec sp_executesql @stmt=N'SELECT
 ',@params=N'@OrderBy_Criteria NVarChar(max)',@OrderBy_Criteria=N'CLR Time'
 
 
-----IO STATISTICS ############################################################################################################
+----BUFFER IO STATISTICS ############################################################################################################
 
 
           select
@@ -801,4 +801,24 @@ exec sp_executesql @stmt=N'SELECT
           from sys.dm_exec_requests r
           outer apply sys.dm_exec_sql_text(sql_handle) as qt
           where wait_type like 'PAGEIOLATCH_%' --N'Buffer IO'/N'Buffer Latch'
+
+
+----IO STATISTICS ###################################################################################
+
+
+          select
+          m.database_id,
+          db_name(m.database_id) as database_name,
+          m.file_id,
+          m.name as file_name,
+          m.physical_name,
+          m.type_desc,
+          fs.num_of_reads,
+          fs.num_of_bytes_read,
+          fs.io_stall_read_ms,
+          fs.num_of_writes,
+          fs.num_of_bytes_written,
+          fs.io_stall_write_ms
+          from sys.dm_io_virtual_file_stats(NULL, NULL) fs
+          join sys.master_files m on fs.database_id = m.database_id and fs.file_id = m.file_id
        
