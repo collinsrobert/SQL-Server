@@ -1,0 +1,10 @@
+Register with the SQL IaaS Agent Extension to unlock a number of feature benefits.
+Use the best backup and restore strategy for your SQL Server workload.
+Ensure Accelerated Networking is enabled on the virtual machine.
+Use Microsoft Defender for Cloud to improve the overall security posture of your virtual machine deployment.
+Use Microsoft Defender for Cloud, integrated with Microsoft Defender for Cloud, for specific SQL Server VM coverage including vulnerability assessments, and just-in-time access, which reduces the attack service while allowing legitimate users to access virtual machines when necessary. To learn more, see vulnerability assessments, enable vulnerability assessments for SQL Server VMs and just-in-time access.
+Use Azure Advisor to address performance, cost, reliability, operational excellence, and security recommendations.
+Use Azure Monitor to collect, analyze, and act on telemetry data from your SQL Server environment. This includes identifying infrastructure issues with VM insights and monitoring data with Log Analytics for deeper diagnostics.
+Enable Autoshutdown for development and test environments.
+Implement a high availability and disaster recovery (HADR) solution that meets your business continuity SLAs, see the HADR options options available for SQL Server on Azure VMs.
+Use the Azure portal (support + troubleshooting) to evaluate resource health and history; submit new support requests when needed.
