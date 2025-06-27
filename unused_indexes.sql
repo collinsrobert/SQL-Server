@@ -8,7 +8,7 @@ ius.last_user_update AS [LastUserUpdate]
 FROM sys.indexes i
 INNER JOIN sys.dm_db_index_usage_stats ius
 ON ius.OBJECT_ID = i.OBJECT_ID AND ius.index_id = i.index_id
-WHERE OBJECTPROPERTY(i.OBJECT_ID, ‘IsUserTable’) = 1 -- User Indexes
+WHERE OBJECTPROPERTY(i.OBJECT_ID, 'IsUserTable') = 1 -- User Indexes
 AND NOT(user_seeks > 0 OR user_scans > 0 or user_lookups > 0)
 AND i.is_primary_key = 0
 AND i.is_unique = 0
