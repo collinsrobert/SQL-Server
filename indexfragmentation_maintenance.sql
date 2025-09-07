@@ -37,8 +37,8 @@ declare sql_index_Cur CURSOR FOR
 
 SELECT
 
-concat('alter index ',idx.name ,' on ',
-OBJECT_NAME(idx.object_id),' REBUILD') IndexRebuild
+concat('alter index [',idx.name ,'] on [',
+OBJECT_NAME(idx.object_id),'] REBUILD') IndexRebuild
   --OBJECT_NAME(idx.object_id) AS TableName,
   --idx.name AS IndexName,
   --ips.index_type_desc AS IndexType,
