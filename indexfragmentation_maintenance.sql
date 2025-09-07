@@ -1,4 +1,4 @@
-USE [Liusight]
+USE [SAPDB]
 GO
 
 /****** Object:  StoredProcedure [dbo].[usp_monitor_long_running_jobs]    Script Date: 9/7/2025 10:55:50 AM ******/
@@ -44,11 +44,11 @@ OBJECT_NAME(idx.object_id),' REBUILD') IndexRebuild
   --ips.index_type_desc AS IndexType,
   --ips.avg_fragmentation_in_percent AS FragmentationPercentage,
   --ips.page_count AS PageCount
-FROM sys.dm_db_index_physical_stats(DB_ID('SAPDB'), NULL, NULL, NULL, 'DETAILED') ips
+FROM sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, 'DETAILED') ips
 JOIN sys.indexes idx
   ON idx.object_id = ips.object_id
   AND idx.index_id = ips.index_id
-WHERE ips.database_id = DB_ID('SAPDB')
+WHERE ips.database_id = DB_ID()
   AND idx.name IS NOT NULL
   and    ips.avg_fragmentation_in_percent>10
 
