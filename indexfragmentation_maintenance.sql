@@ -60,7 +60,7 @@ INTO    @Index
 while @@FETCH_STATUS = 0
  Begin
  
- select @Index
+ execute (@Index)
 		
 	
 	fetch next from sql_index_Cur 
