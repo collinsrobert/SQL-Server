@@ -36,7 +36,7 @@ declare
 declare sql_index_Cur CURSOR FOR
 
 SELECT
-
+distinct
 concat('alter index [',idx.name ,'] on [',
 OBJECT_NAME(idx.object_id),'] REBUILD') IndexRebuild
   --OBJECT_NAME(idx.object_id) AS TableName,
