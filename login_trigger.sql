@@ -100,4 +100,34 @@ GO
 --DISABLE TRIGGER User_Login_audit ON ALL SERVER
 --GO
 
+
+
+
+-- Create an audit table
+CREATE DATABASE AuditDB;
+GO
+USE AuditDB;
+GO
+CREATE TABLE LoginAudit
+(
+    AuditID INT IDENTITY PRIMARY KEY,
+    LoginName SYSNAME,
+    HostName NVARCHAR(128),
+    AppName NVARCHAR(128),
+    LoginTime DATETIME DEFAULT GETDATE()
+);
+GO
+
+-- Logon Trigger
+CREATE TRIGGER AuditLogon
+ON ALL SERVER
+FOR LOGON
+AS
+BEGIN
+    INSERT INTO AuditDB.dbo.LoginAudit(LoginName, HostName, AppName)
+    VALUES (ORIGINAL_LOGIN(), HOST_NAME(), APP_NAME());
+END;
+GO
+
+
  
