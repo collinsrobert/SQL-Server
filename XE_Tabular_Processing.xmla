@@ -25,3 +25,21 @@
     </Trace>
   </ObjectDefinition>
 </Create>
+
+
+
+
+
+----read this from sql server engine
+SELECT
+    object_name AS event_name,
+    CAST(event_data AS XML) AS event_xml,
+    file_name,
+    file_offset
+FROM sys.fn_xe_file_target_read_file(
+    N'J:\SYSDB\MSAS16.MSSQLSERVER\OLAP\Log\XE_Tabular_Processing*.xel',
+    NULL,
+    NULL,
+    NULL
+)
+ORDER BY file_name, file_offset;
