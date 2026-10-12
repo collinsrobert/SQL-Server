@@ -1,0 +1,27 @@
+<Create xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ObjectDefinition>
+    <Trace>
+      <ID>XE_Tabular_Processing</ID>
+      <Name>XE_Tabular_Processing</Name>
+      <XEvent xmlns="http://schemas.microsoft.com/analysisservices/2011/engine/300/300">
+        <event_session name="XE_Tabular_Processing" dispatchLatency="1" maxEventSize="0" maxMemory="4" memoryPartition="PerCpu" eventRetentionMode="AllowSingleEventLoss" trackCausality="true" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+          <event package="AS" name="CommandBegin" />
+          <event package="AS" name="CommandEnd" />
+          <event package="AS" name="ProgressReportBegin" />
+          <event package="AS" name="ProgressReportEnd" />
+          <event package="AS" name="AuditLogin" />
+          <event package="AS" name="AuditLogout" />
+          <event package="AS" name="UserDefined" />
+          <event package="AS" name="VertiPaqSEQueryBegin" />
+          <event package="AS" name="VertiPaqSEQueryEnd" />
+          <target package="package0" name="event_file">
+            <parameter name="filename" value="J:\SYSDB\MSAS16.MSSQLSERVER\OLAP\Log\XE_Tabular_Processing.xel" />
+            <parameter name="max_file_size" value="4096" />
+            <parameter name="max_rollover_files" value="10" />
+            <parameter name="increment" value="1024" />
+          </target>
+        </event_session>
+      </XEvent>
+    </Trace>
+  </ObjectDefinition>
+</Create>
