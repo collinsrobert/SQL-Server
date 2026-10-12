@@ -43,3 +43,42 @@ FROM sys.fn_xe_file_target_read_file(
     NULL
 )
 ORDER BY file_name, file_offset;
+
+
+
+
+
+
+
+
+
+
+SELECT
+    timestamp_utc,
+    file_name,
+    file_offset,
+    CAST(event_data AS xml) AS event_xml
+INTO #xe
+FROM sys.fn_xe_file_target_read_file(N'J:\xe\XE_Tabular_Processing*.xel', NULL, NULL, NULL) ----EVENT FILE PATH
+WHERE 
+--timestamp_utc >= '2026-10-12T13:00:00'      -- UTC, see note below
+--  AND timestamp_utc <  '2026-10-12T13:30:00'
+   event_data LIKE N'%Monthly Sales M - Live Forecast%'; -----CUBE NAME
+ 
+-- 2) Shred out the fields you care about
+SELECT
+    timestamp_utc,
+    event_xml.value('(/event/@name)[1]', 'varchar(100)')                                   AS event_name,
+    event_xml.value('(/event/data[@name="NTUserName"]/value)[1]', 'nvarchar(256)')          AS nt_user_name,
+    event_xml.value('(/event/data[@name="DatabaseName"]/value)[1]', 'nvarchar(256)')        AS database_name,
+    event_xml.value('(/event/data[@name="TextData"]/value)[1]', 'nvarchar(max)')            AS command_text,
+    event_xml.value('(/event/data[@name="Duration"]/value)[1]', 'bigint')                   AS duration_ms,
+    event_xml.value('(/event/data[@name="Success"]/value)[1]', 'int')                       AS success,
+    event_xml.value('(/event/data[@name="ConnectionID"]/value)[1]', 'bigint')               AS connection_id,
+    event_xml.value('(/event/data[@name="SessionID"]/value)[1]', 'varchar(50)')             AS session_id,
+    event_xml.value('(/event/data[@name="RequestID"]/value)[1]', 'varchar(50)')             AS request_id,
+    event_xml                                                                                AS full_event_xml
+FROM #xe
+WHERE event_xml.value('(/event/@name)[1]', 'varchar(100)')
+      IN ('CommandBegin','CommandEnd','QueryBegin','QueryEnd')   -- skip VertiPaqSE noise
+ORDER BY timestamp_utc;
